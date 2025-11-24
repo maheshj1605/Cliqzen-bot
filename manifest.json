@@ -1,1 +1,75 @@
+{
+  "name": "CliqZen - Smart Task Manager Bot",
+  "description": "An AI-powered productivity bot for managing tasks, reminders, analytics, and team workflows inside Zoho Cliq.",
+  "type": "bot",
+  "version": "1.0.0",
+  "author": "Your Name",
+  "homepage_url": "",
+  "redirect_url": "",
+  "price_model": "FREE",
+  "platform": "Cliq",
+  "keywords": ["task", "manager", "cliq", "automation", "productivity", "bot"],
 
+  "bot": {
+    "identifier": "cliqzen_bot",
+    "display_name": "CliqZen Bot",
+    "description": "Your intelligent productivity assistant on Zoho Cliq.",
+    "scopes": {
+      "users.ALL": ["read"],
+      "channels.ALL": ["read", "write"],
+      "messages.ALL": ["read", "write"]
+    },
+    "webhook_url": "",
+    "handler": {
+      "on_message": "bot/handlers/on_message.deluge",
+      "menu": "bot/handlers/menu_handler.deluge",
+      "settings": "bot/handlers/settings_handler.deluge",
+      "install": "bot/handlers/install_handler.deluge"
+    }
+  },
+
+  "menus": [
+    {
+      "menu_name": "Task Menu",
+      "handler": "bot/handlers/menu_handler.deluge",
+      "menu": "bot/menus/main_menu.json"
+    }
+  ],
+
+  "components": {
+    "functions": [
+      {
+        "name": "createTask",
+        "handler": "catalyst/functions/createTask/index.js"
+      },
+      {
+        "name": "updateTask",
+        "handler": "catalyst/functions/updateTask/index.js"
+      },
+      {
+        "name": "deleteTask",
+        "handler": "catalyst/functions/deleteTask/index.js"
+      },
+      {
+        "name": "listTasks",
+        "handler": "catalyst/functions/listTasks/index.js"
+      },
+      {
+        "name": "getTask",
+        "handler": "catalyst/functions/getTask/index.js"
+      },
+      {
+        "name": "analytics",
+        "handler": "catalyst/functions/analytics/index.js"
+      }
+    ],
+    "workflows": [
+      "workflows/daily_summary.deluge",
+      "workflows/reminder_scheduler.deluge",
+      "workflows/overdue_task_checker.deluge"
+    ],
+    "db": {
+      "schema": "catalyst/db/schema.json"
+    }
+  }
+}
