@@ -1,1 +1,109 @@
+// -------------------------------------------------------------------
+// CliqZen Bot - on_message Handler (Advanced AI Message Processor)
+// -------------------------------------------------------------------
 
+text = message.get("text");
+sender = message.get("sender");
+
+// Ignore bot responses
+if(sender.get("id") == bot.get("id"))
+{
+	return;
+}
+
+// Normalize text
+cleanText = text.toLowerCase().trim();
+
+// --------------------------------------------------------
+// Step 1: Detect Task Intent (AI-like Keyword Engine)
+// --------------------------------------------------------
+taskKeywords = list:("create task","add task","todo","assign","task","remind me","i need to","finish this","please add","note this");
+
+isTaskIntent = false;
+for each k in taskKeywords
+{
+	if(cleanText.contains(k))
+	{
+		isTaskIntent = true;
+		break;
+	}
+}
+
+if(!isTaskIntent)
+{
+	info "❌ No task intent detected";
+	return;
+}
+
+// --------------------------------------------------------
+// Step 2: Extract Task Title (Mini-NLP)
+// --------------------------------------------------------
+removeWords = "(?i)(create task|add task|todo|assign|task|remind me to|remind me|i need to|finish|note this)";
+
+taskTitle = cleanText.replaceAll(removeWords, "").trim();
+if(taskTitle == "")
+{
+	taskTitle = "Untitled Task";
+}
+
+// Auto-capitalize task title
+taskTitle = taskTitle.substring(0,1).toUpperCase() + taskTitle.substring(1);
+
+// --------------------------------------------------------
+// Step 3: Build Task Data Object
+// --------------------------------------------------------
+taskData = Map();
+taskData.put("title", taskTitle);
+taskData.put("created_by", sender.get("name"));
+taskData.put("priority", "Medium");
+taskData.put("status", "Pending");
+taskData.put("created_time", zoho.currenttime.toString());
+
+// --------------------------------------------------------
+// Step 4: Catalyst API Call (Backend Task Storage)
+// --------------------------------------------------------
+try
+{
+	apiResp = invokeurl
+	[
+		url :"https://YOUR_CATALYST_DOMAIN/server/createTask"
+		type :POST
+		parameter:taskData
+		content-type:"application/json"
+	];
+
+	success = true;
+}
+catch(e)
+{
+	success = false;
+	info "Catalyst Error: " + e.toString();
+}
+
+// --------------------------------------------------------
+// Step 5: Build Zoho Cliq Card Response
+// --------------------------------------------------------
+card = Map();
+card.put("theme", "modern");
+
+if(success)
+{
+	card.put("title", "📝 Task Created!");
+	card.put("sub_title", taskTitle);
+}
+else
+{
+	card.put("title", "⚠ Task Saved Locally");
+	card.put("sub_title", "Backend unreachable");
+}
+
+// Buttons
+buttonList = List();
+buttonList.add({"label":"✔ Mark Done", "action":"mark_done", "task_title":taskTitle});
+buttonList.add({"label":"✏ Edit", "action":"update_task", "task_title":taskTitle});
+buttonList.add({"label":"🗑 Delete", "action":"delete_task", "task_title":taskTitle});
+
+card.put("buttons", buttonList);
+
+// Final return
+return card;
