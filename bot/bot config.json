@@ -1,38 +1,54 @@
 {
-  "bot_name": "CliqZen Bot",
-  "description": "AI-powered Smart Task Manager bot for Zoho Cliq.",
-  
-  "developer": {
-    "name": "Your Name",
-    "email": "your-email@example.com"
+  "name": "CliqZen bot ",
+  "display_name": "CliqZen — Smart Task Manager",
+  "description": "AI-powered Smart Task OS for Zoho Cliq. Converts messages to tasks, manages sprints, sends reminders, and provides analytics.",
+  "avatar": "https://i.ibb.co/7Sc2v7Q/cliqzen-logo.png",
+  "status": "active",
+  "type": "bot",
+
+  "events": {
+    "on_message": "bot/handlers/on_message.deluge",
+    "on_install": "bot/handlers/install_handler.deluge",
+    "on_settings_update": "bot/handlers/settings_handler.deluge",
+    "on_menu_action": "bot/handlers/menu_handler.deluge"
   },
 
-  "language": "deluge",
+  "menus": {
+    "main_menu": "bot/menus/main_menu.json",
+    "admin_menu": "bot/menus/admin_menu.json"
+  },
 
-  "scopes": [
-    "ZohoCliq.Users.READ",
-    "ZohoCliq.Bots.CREATE",
-    "ZohoCliq.Bots.READ",
-    "ZohoCliq.Bots.UPDATE",
-    "ZohoCliq.Bots.DELETE",
-    "ZohoCliq.Chat.READ",
-    "ZohoCliq.Chat.WRITE",
-    "ZohoCliq.Webhooks.CREATE",
-    "ZohoCliq.Webhooks.READ"
+  "card_actions": {
+    "update_task": "bot/handlers/on_card_action.deluge",
+    "delete_task": "bot/handlers/on_card_action.deluge",
+    "mark_done": "bot/handlers/on_card_action.deluge"
+  },
+
+  "settings": [
+    {
+      "name": "workspace_mode",
+      "type": "string",
+      "label": "Workspace Mode",
+      "default_value": "team",
+      "options": ["team", "personal"]
+    },
+    {
+      "name": "default_priority",
+      "type": "string",
+      "label": "Default Task Priority",
+      "default_value": "medium",
+      "options": ["low", "medium", "high"]
+    }
   ],
 
-  "event_handlers": {
-    "on_message": "handlers/on_message.deluge",
-    "on_install": "handlers/install_handler.deluge",
-    "on_settings": "handlers/settings_handler.deluge"
-  },
-
-  "menus": [
-    {
-      "name": "task_menu",
-      "display_name": "Task Menu",
-      "menu_json": "menus/main_menu.json",
-      "handler": "handlers/menu_handler.deluge"
-    }
-  ]
+  "permissions": {
+    "scopes": [
+      "Chat.Read",
+      "Chat.Write",
+      "User.Read",
+      "Files.Create",
+      "Data.Read",
+      "Data.Write"
+    ]
+  }
 }
