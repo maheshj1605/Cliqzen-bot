@@ -1,86 +1,38 @@
 {
-  "name": "CliqZen Bot",
-  "identifier": "cliqzen_bot",
-  "type": "bot",
-  "description": "AI-powered Smart Task Manager Bot for Zoho Cliq.",
+  "bot_name": "CliqZen Bot",
+  "description": "AI-powered Smart Task Manager bot for Zoho Cliq.",
+  
+  "developer": {
+    "name": "Your Name",
+    "email": "your-email@example.com"
+  },
 
-  "command_prefix": "/",
+  "language": "deluge",
 
-  "commands": [
-    {
-      "name": "create",
-      "display_name": "Create Task",
-      "description": "Create a new task.",
-      "usage": "/create <task_name>",
-      "handler": "bot/commands/create_task.deluge"
-    },
-    {
-      "name": "list",
-      "display_name": "List Tasks",
-      "description": "List all tasks.",
-      "usage": "/list",
-      "handler": "bot/commands/list_tasks.deluge"
-    },
-    {
-      "name": "update",
-      "display_name": "Update Task",
-      "description": "Update a task status or details.",
-      "usage": "/update <task_id>",
-      "handler": "bot/commands/update_task.deluge"
-    },
-    {
-      "name": "delete",
-      "display_name": "Delete Task",
-      "description": "Delete a task.",
-      "usage": "/delete <task_id>",
-      "handler": "bot/commands/delete_task.deluge"
-    },
-    {
-      "name": "analytics",
-      "display_name": "Task Analytics",
-      "description": "Show task analytics dashboard.",
-      "usage": "/analytics",
-      "handler": "bot/commands/analytics.deluge"
-    },
-    {
-      "name": "help",
-      "display_name": "Help",
-      "description": "Show help commands and usage instructions.",
-      "usage": "/help",
-      "handler": "bot/commands/help.deluge"
-    }
+  "scopes": [
+    "ZohoCliq.Users.READ",
+    "ZohoCliq.Bots.CREATE",
+    "ZohoCliq.Bots.READ",
+    "ZohoCliq.Bots.UPDATE",
+    "ZohoCliq.Bots.DELETE",
+    "ZohoCliq.Chat.READ",
+    "ZohoCliq.Chat.WRITE",
+    "ZohoCliq.Webhooks.CREATE",
+    "ZohoCliq.Webhooks.READ"
   ],
+
+  "event_handlers": {
+    "on_message": "handlers/on_message.deluge",
+    "on_install": "handlers/install_handler.deluge",
+    "on_settings": "handlers/settings_handler.deluge"
+  },
 
   "menus": [
     {
-      "name": "Task Menu",
-      "display_name": "Task Quick Menu",
-      "handler": "bot/handlers/menu_handler.deluge",
-      "menu": "bot/menus/main_menu.json"
+      "name": "task_menu",
+      "display_name": "Task Menu",
+      "menu_json": "menus/main_menu.json",
+      "handler": "handlers/menu_handler.deluge"
     }
-  ],
-
-  "settings": {
-    "allow_user_settings": true,
-    "user_settings_config": [
-      {
-        "name": "daily_summary",
-        "label": "Receive Daily Task Summary",
-        "type": "boolean",
-        "default": true
-      },
-      {
-        "name": "reminder_time",
-        "label": "Daily Reminder Time (HH:MM)",
-        "type": "text",
-        "default": "09:00"
-      }
-    ]
-  },
-
-  "handlers": {
-    "on_message": "bot/handlers/on_message.deluge",
-    "install": "bot/handlers/install_handler.deluge",
-    "settings": "bot/handlers/settings_handler.deluge"
-  }
+  ]
 }
