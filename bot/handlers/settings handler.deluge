@@ -1,1 +1,97 @@
+// ------------------------------------------------------
+// CliqZen Bot - Settings Handler (Pro Edition)
+// Handles all bot setting updates inside Zoho Cliq
+// ------------------------------------------------------
 
+updatedSettings = settings_action.get("settings");
+user = settings_action.get("user");
+username = user.get("name");
+
+info "⚙ Settings updated by: " + username;
+
+
+// ------------------------------------------------------
+// ADMIN CHECK — Only admin can modify global workspace settings
+// ------------------------------------------------------
+adminEmails = list:("admin@company.com", "mahesh@company.com");
+
+isAdmin = adminEmails.contains(user.get("email"));
+
+if(!isAdmin)
+{
+	return {
+		"theme":"modern",
+		"title":"⛔ Permission Denied",
+		"sub_title":"Only admins can modify workspace settings."
+	};
+}
+
+
+// ------------------------------------------------------
+// Extract & Validate Settings
+// ------------------------------------------------------
+workspaceMode = ifnull(updatedSettings.get("workspace_mode"), "personal");
+defaultPriority = ifnull(updatedSettings.get("default_priority"), "Medium");
+
+// Validate priority
+validPriorities = list:("Low","Medium","High","Critical");
+
+if(!validPriorities.contains(defaultPriority))
+{
+	defaultPriority = "Medium";
+}
+
+// Pack into settings map
+settingsMap = Map();
+settingsMap.put("workspace_mode", workspaceMode);
+settingsMap.put("default_priority", defaultPriority);
+settingsMap.put("updated_by", username);
+settingsMap.put("updated_at", zoho.currenttime.toString());
+
+
+// ------------------------------------------------------
+// Save Settings in Catalyst (Database)
+// ------------------------------------------------------
+try
+{
+	saveResp = invokeurl
+	[
+		url :"https://YOUR_CATALYST_DOMAIN/server/saveSettings"
+		type :POST
+		parameters:settingsMap
+		content-type:"application/json"
+	];
+	saveSuccess = true;
+}
+catch(e)
+{
+	info "❌ Settings Save Failed: " + e.toString();
+	saveSuccess = false;
+}
+
+
+// ------------------------------------------------------
+// Build Response Card
+// ------------------------------------------------------
+card = Map();
+card.put("theme", "modern");
+
+if(saveSuccess)
+{
+	card.put("title", "✅ Settings Saved Successfully!");
+	card.put("sub_title",
+		"**Workspace Mode:** " + workspaceMode +
+		"\n**Default Priority:** " + defaultPriority +
+		"\n\nUpdated by: " + username
+	);
+}
+else
+{
+	card.put("title", "⚠ Failed to Save Settings");
+	card.put("sub_title",
+		"Your settings were not saved.\n" +
+		"Backend server unreachable. Please try again."
+	);
+}
+
+return card;
