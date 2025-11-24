@@ -3,23 +3,34 @@
   "description": "An AI-powered productivity bot for managing tasks, reminders, analytics, and team workflows inside Zoho Cliq.",
   "type": "bot",
   "version": "1.0.0",
-  "author": "mahesh",
-  "homepage_url": "",
-  "redirect_url": "",
+  "author": "Mahesh J",
+  "homepage_url": "https://github.com/your-username/cliqzen-bot",
+  "redirect_url": "https://cliq.zoho.com",
   "price_model": "FREE",
   "platform": "Cliq",
-  "keywords": ["task", "manager", "cliq", "automation", "productivity", "bot"],
+
+  "keywords": [
+    "task",
+    "manager",
+    "cliq",
+    "automation",
+    "productivity",
+    "bot",
+    "ai",
+    "workflow"
+  ],
 
   "bot": {
     "identifier": "cliqzen_bot",
     "display_name": "CliqZen Bot",
     "description": "Your intelligent productivity assistant on Zoho Cliq.",
+
     "scopes": {
       "users.ALL": ["read"],
       "channels.ALL": ["read", "write"],
       "messages.ALL": ["read", "write"]
     },
-    "webhook_url": "",
+
     "handler": {
       "on_message": "bot/handlers/on_message.deluge",
       "menu": "bot/handlers/menu_handler.deluge",
@@ -63,11 +74,13 @@
         "handler": "catalyst/functions/analytics/index.js"
       }
     ],
+
     "workflows": [
       "workflows/daily_summary.deluge",
       "workflows/reminder_scheduler.deluge",
       "workflows/overdue_task_checker.deluge"
     ],
+
     "db": {
       "schema": "catalyst/db/schema.json"
     }
