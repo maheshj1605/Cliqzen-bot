@@ -1,1 +1,30 @@
-
+{
+  "type": "card",
+  "theme": "modern",
+  "title": "${task_title}",
+  "sub_title": "Priority: ${priority}\nStatus: ${status}",
+  "image": "https://via.placeholder.com/150",
+  "buttons": [
+    {
+      "label": "✔ Mark Done",
+      "action": "mark_done",
+      "data": {
+        "task_title": "${task_title}"
+      }
+    },
+    {
+      "label": "✏ Edit",
+      "action": "update_task",
+      "data": {
+        "task_title": "${task_title}"
+      }
+    },
+    {
+      "label": "🗑 Delete",
+      "action": "delete_task",
+      "data": {
+        "task_title": "${task_title}"
+      }
+    }
+  ]
+}
