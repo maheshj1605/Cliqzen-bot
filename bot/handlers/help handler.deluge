@@ -1,1 +1,71 @@
+// ------------------------------------------------------
+// CliqZen Bot - Help Handler (Advanced Version)
+// Provides help, command guide & feature overview
+// ------------------------------------------------------
 
+user = help_action.get("user");
+username = user.get("name");
+
+// Debug Log
+info "📘 Help requested by: " + username;
+
+
+// ------------------------------------------------------
+// Help Card UI
+// ------------------------------------------------------
+card = Map();
+card.put("theme", "modern");
+card.put("title", "📘 CliqZen – Help & Commands");
+
+// Help Content
+overview = "**CliqZen Bot** is your AI-powered task assistant.\n";
+overview = overview + "Create, track, update, and manage tasks quickly.";
+
+commands = "**Available Commands:**\n";
+commands = commands + "• `/create <task>` – Create a new task\n";
+commands = commands + "• `/tasks` – View all tasks\n";
+commands = commands + "• `/search <keyword>` – Search tasks\n";
+commands = commands + "• `/delete <task>` – Delete a task\n";
+commands = commands + "• `/settings` – Update workspace settings\n";
+
+features = "**Core Features:**\n";
+features = features + "✔ Smart task creation\n";
+features = features + "✔ Priority-based sorting\n";
+features = features + "✔ AI-powered search\n";
+features = features + "✔ Workspace modes (Team / Personal)\n";
+features = features + "✔ Quick buttons (Done / Edit / Delete)\n";
+
+usage = "**Tip:**\n";
+usage = usage + "Use the bot menu anytime for shortcuts.";
+
+// Combine sections
+helpText = overview + "\n\n" + commands + "\n" + features + "\n" + usage;
+
+card.put("sub_title", helpText);
+
+
+// ------------------------------------------------------
+// Buttons
+// ------------------------------------------------------
+buttons = List();
+
+// Button 1 - Open bot menu
+openMenuBtn = Map();
+openMenuBtn.put("label", "Open Menu");
+openMenuBtn.put("action", "open_bot_menu");
+
+// Button 2 - Documentation
+docsBtn = Map();
+docsBtn.put("label", "Documentation");
+docsBtn.put("url", "https://YOUR_DOCS_URL");
+
+buttons.add(openMenuBtn);
+buttons.add(docsBtn);
+
+card.put("buttons", buttons);
+
+
+// ------------------------------------------------------
+// Return Help Card
+// ------------------------------------------------------
+return card;
