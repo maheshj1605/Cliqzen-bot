@@ -1,1 +1,15 @@
-
+{
+  "name": "cliqzen_admin_menu",
+  "type": "menu",
+  "title": "Admin Panel",
+  "options": [
+    {
+      "label": "📊 Analytics Dashboard",
+      "name": "admin_analytics"
+    },
+    {
+      "label": "🗂 Reset Data",
+      "name": "admin_reset_data"
+    }
+  ]
+}
