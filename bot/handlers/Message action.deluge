@@ -1,0 +1,159 @@
+// -----------------------------------------------------------
+// CliqZen Bot - Message Action Handler (Advanced Version)
+// Handles button clicks on task cards
+// -----------------------------------------------------------
+
+action = message_action.get("action");
+payload = message_action.get("data");
+user = message_action.get("user");
+username = user.get("name");
+
+// Debug log
+info "🔥 Message Action Triggered: " + action + " by " + username;
+
+
+// -----------------------------------------------------------
+// Helper Function: Catalyst API Wrapper
+// -----------------------------------------------------------
+callAPI = function(url, method, data)
+{
+	try
+	{
+		if(method == "GET")
+		{
+			return invokeurl
+			[
+				url :url
+				type :GET
+				content-type:"application/json"
+				connection:"cliqzen_catalyst_connection"
+			];
+		}
+		else
+		{
+			return invokeurl
+			[
+				url :url
+				type :POST
+				body:data
+				content-type:"application/json"
+				connection:"cliqzen_catalyst_connection"
+			];
+		}
+	}
+	catch(e)
+	{
+		info "❌ API Error: " + e.toString();
+		return {"text":"⚠ Catalyst server unreachable."};
+	}
+};
+
+
+// -----------------------------------------------------------
+// MARK TASK AS DONE
+// -----------------------------------------------------------
+if(action == "mark_done")
+{
+	taskTitle = payload.get("task_title");
+
+	updateData = Map();
+	updateData.put("title", taskTitle);
+	updateData.put("status", "Completed");
+
+	resp = callAPI(
+		"https://YOUR_CATALYST_DOMAIN/server/updateTask",
+		"POST",
+		updateData
+	);
+
+	return {
+		"text": "✔ *Marked as Completed*\nTask: **" + taskTitle + "**"
+	};
+}
+
+
+// -----------------------------------------------------------
+// DELETE TASK
+// -----------------------------------------------------------
+if(action == "delete_task")
+{
+	taskTitle = payload.get("task_title");
+
+	deletePayload = Map();
+	deletePayload.put("title", taskTitle);
+
+	resp = callAPI(
+		"https://YOUR_CATALYST_DOMAIN/server/deleteTask",
+		"POST",
+		deletePayload
+	);
+
+	return {
+		"text": "🗑 *Task Deleted Successfully*\nDeleted: **" + taskTitle + "**"
+	};
+}
+
+
+// -----------------------------------------------------------
+// EDIT TASK (SHOW INPUT FORM)
+// -----------------------------------------------------------
+if(action == "update_task")
+{
+	taskTitle = payload.get("task_title");
+
+	return {
+		"type": "form",
+		"title": "✏ Edit Task",
+		"fields": [
+			{
+				"type": "text",
+				"label": "Task Title",
+				"name": "new_title",
+				"value": taskTitle
+			},
+			{
+				"type": "select",
+				"label": "Priority",
+				"name": "priority",
+				"options": ["Low", "Medium", "High"]
+			}
+		],
+		"submit_label": "Update Task",
+		"action": "submit_edit",
+		"task_title": taskTitle
+	};
+}
+
+
+// -----------------------------------------------------------
+// SUBMIT EDIT (FORM SUBMISSION)
+// -----------------------------------------------------------
+if(action == "submit_edit")
+{
+	oldTitle = payload.get("task_title");
+	newTitle = payload.get("new_title");
+	newPriority = payload.get("priority");
+
+	updateBody = Map();
+	updateBody.put("old_title", oldTitle);
+	updateBody.put("new_title", newTitle);
+	updateBody.put("priority", newPriority);
+
+	resp = callAPI(
+		"https://YOUR_CATALYST_DOMAIN/server/updateTask",
+		"POST",
+		updateBody
+	);
+
+	return {
+		"text": "✏ *Task Updated*\n**" + newTitle + "** (" + newPriority + ")"
+	};
+}
+
+
+// -----------------------------------------------------------
+// UNKNOWN ACTION (SAFE FALLBACK)
+// -----------------------------------------------------------
+return {
+	"text": "❓ Unknown action triggered."
+};
