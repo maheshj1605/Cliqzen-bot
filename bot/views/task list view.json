@@ -1,1 +1,15 @@
-
+{
+  "type": "list",
+  "title": "📋 Task List",
+  "items": [
+    {
+      "label": "${title}",
+      "subtitle": "Priority: ${priority} | Status: ${status}",
+      "action": "open_task",
+      "data": {
+        "task_title": "${title}"
+      }
+    }
+  ],
+  "empty_text": "No tasks available. Create one!"
+}
