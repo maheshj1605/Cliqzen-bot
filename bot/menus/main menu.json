@@ -1,1 +1,27 @@
-
+{
+  "name": "cliqzen_main_menu",
+  "type": "menu",
+  "title": "CliqZen Menu",
+  "options": [
+    {
+      "label": "🆕 Create Task",
+      "name": "create_new_task"
+    },
+    {
+      "label": "📋 View All Tasks",
+      "name": "view_tasks"
+    },
+    {
+      "label": "👤 My Tasks",
+      "name": "my_tasks"
+    },
+    {
+      "label": "🔍 Search Task",
+      "name": "search_task"
+    },
+    {
+      "label": "⚡ Quick Add",
+      "name": "quick_add"
+    }
+  ]
+}
