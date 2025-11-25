@@ -1,56 +1,29 @@
 // ------------------------------------------------------
-// CliqZen Bot - Settings Handler (Pro Edition)
-// Handles all bot setting updates inside Zoho Cliq
+// CliqZen Bot - Settings Handler (Advanced Version)
+// Handles updates to bot settings in Zoho Cliq
 // ------------------------------------------------------
 
 updatedSettings = settings_action.get("settings");
 user = settings_action.get("user");
 username = user.get("name");
 
+// Debug Log
 info "⚙ Settings updated by: " + username;
 
 
 // ------------------------------------------------------
-// ADMIN CHECK — Only admin can modify global workspace settings
+// Extract Settings
 // ------------------------------------------------------
-adminEmails = list:("admin@company.com", "mahesh@company.com");
+workspaceMode = updatedSettings.get("workspace_mode");
+defaultPriority = updatedSettings.get("default_priority");
 
-isAdmin = adminEmails.contains(user.get("email"));
-
-if(!isAdmin)
-{
-	return {
-		"theme":"modern",
-		"title":"⛔ Permission Denied",
-		"sub_title":"Only admins can modify workspace settings."
-	};
-}
-
-
-// ------------------------------------------------------
-// Extract & Validate Settings
-// ------------------------------------------------------
-workspaceMode = ifnull(updatedSettings.get("workspace_mode"), "personal");
-defaultPriority = ifnull(updatedSettings.get("default_priority"), "Medium");
-
-// Validate priority
-validPriorities = list:("Low","Medium","High","Critical");
-
-if(!validPriorities.contains(defaultPriority))
-{
-	defaultPriority = "Medium";
-}
-
-// Pack into settings map
 settingsMap = Map();
 settingsMap.put("workspace_mode", workspaceMode);
 settingsMap.put("default_priority", defaultPriority);
-settingsMap.put("updated_by", username);
-settingsMap.put("updated_at", zoho.currenttime.toString());
 
 
 // ------------------------------------------------------
-// Save Settings in Catalyst (Database)
+// Store Updated Settings in Catalyst (Database)
 // ------------------------------------------------------
 try
 {
@@ -58,40 +31,39 @@ try
 	[
 		url :"https://YOUR_CATALYST_DOMAIN/server/saveSettings"
 		type :POST
-		parameters:settingsMap
+		body:settingsMap
 		content-type:"application/json"
+		connection:"cliqzen_catalyst_connection"
 	];
-	saveSuccess = true;
+
+	success = true;
+	info "✅ Settings saved to Catalyst successfully.";
 }
 catch(e)
 {
-	info "❌ Settings Save Failed: " + e.toString();
-	saveSuccess = false;
+	info "❌ Settings save failed: " + e.toString();
+	success = false;
 }
 
 
 // ------------------------------------------------------
-// Build Response Card
+// Response Card UI
 // ------------------------------------------------------
 card = Map();
 card.put("theme", "modern");
 
-if(saveSuccess)
+if(success)
 {
-	card.put("title", "✅ Settings Saved Successfully!");
-	card.put("sub_title",
-		"**Workspace Mode:** " + workspaceMode +
-		"\n**Default Priority:** " + defaultPriority +
-		"\n\nUpdated by: " + username
+	card.put("title", "✅ Settings Saved Successfully");
+	card.put("sub_title", 
+		"Workspace Mode: **" + workspaceMode + "**\n" +
+		"Default Priority: **" + defaultPriority + "**"
 	);
 }
 else
 {
-	card.put("title", "⚠ Failed to Save Settings");
-	card.put("sub_title",
-		"Your settings were not saved.\n" +
-		"Backend server unreachable. Please try again."
-	);
+	card.put("title", "⚠ Settings Save Failed");
+	card.put("sub_title", "Catalyst server unreachable. Please try again.");
 }
 
 return card;
