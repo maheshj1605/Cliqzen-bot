@@ -1,1 +1,6 @@
-
+{
+  "task_list": "task list.json",
+  "task_card": "task card.json",
+  "admin_menu": "admin menu.json",
+  "admin_analytics": "analytics.json"
+}
