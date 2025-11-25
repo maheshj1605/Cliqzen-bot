@@ -1,1 +1,24 @@
-
+{
+  "type": "card",
+  "theme": "modern",
+  "title": "📊 Task Analytics",
+  "sub_title": "Overview of team productivity",
+  "sections": [
+    {
+      "title": "Summary",
+      "content": [
+        "Total Tasks: ${total}",
+        "Completed: ${completed}",
+        "Pending: ${pending}"
+      ]
+    },
+    {
+      "title": "Top Performers",
+      "content": [
+        "${top_user_1}",
+        "${top_user_2}",
+        "${top_user_3}"
+      ]
+    }
+  ]
+}
