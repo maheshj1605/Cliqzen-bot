@@ -1,1 +1,52 @@
+{
+"project_name": "CliqZen Bot",
+"version": "1.0.0",
+"runtime": "node16",
 
+"functions": {
+"createTask": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 15
+},
+"updateTask": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 15
+},
+"deleteTask": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 15
+},
+"listTasks": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 15
+},
+"getTask": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 15
+},
+"analytics": {
+"runtype": "zcf",
+"memory": 256,
+"timeout": 20
+}
+},
+
+"database": {
+"schema_file": "db/schema.json",
+"seed_data": "db/seed_data.json",
+"migrations_path": "db/migrations"
+},
+
+"config": {
+"mode": "production",
+"region": "in",
+"author": "CliqZen Bot Developer",
+"logging": true,
+"auto_scaling": true
+}
+}
