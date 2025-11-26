@@ -1,1 +1,17 @@
-
+{
+  "migration_id": "001_create_tables",
+  "changes": [
+    {
+      "action": "create_table",
+      "table_name": "Tasks",
+      "columns": [
+        { "name": "id", "type": "bigint", "auto_increment": true, "primary_key": true },
+        { "name": "title", "type": "string", "size": 150 },
+        { "name": "priority", "type": "string", "size": 20 },
+        { "name": "status", "type": "string", "size": 20 },
+        { "name": "created_by", "type": "string", "size": 100 },
+        { "name": "created_at", "type": "datetime" }
+      ]
+    }
+  ]
+}
