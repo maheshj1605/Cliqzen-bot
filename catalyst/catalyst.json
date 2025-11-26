@@ -1,5 +1,5 @@
 {
-"project_name": "CliqZen Bot",
+"project name": "CliqZen Bot",
 "version": "1.0.0",
 "runtime": "node16",
 
@@ -37,9 +37,9 @@
 },
 
 "database": {
-"schema_file": "db/schema.json",
-"seed_data": "db/seed_data.json",
-"migrations_path": "db/migrations"
+"schema file": "db/schema.json",
+"seed data": "db/seed_data.json",
+"migrations path": "db/migrations"
 },
 
 "config": {
@@ -47,6 +47,6 @@
 "region": "in",
 "author": "CliqZen Bot Developer",
 "logging": true,
-"auto_scaling": true
+"auto scaling": true
 }
 }
