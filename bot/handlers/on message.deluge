@@ -54,10 +54,10 @@ taskTitle = taskTitle.substring(0,1).toUpperCase() + taskTitle.substring(1);
 // --------------------------------------------------------
 taskData = Map();
 taskData.put("title", taskTitle);
-taskData.put("created_by", sender.get("name"));
+taskData.put("created by", sender.get("name"));
 taskData.put("priority", "Medium");
 taskData.put("status", "Pending");
-taskData.put("created_time", zoho.currenttime.toString());
+taskData.put("created time", zoho.currenttime.toString());
 
 // --------------------------------------------------------
 // Step 4: Catalyst API Call (Backend Task Storage)
@@ -66,7 +66,7 @@ try
 {
 	apiResp = invokeurl
 	[
-		url :"https://YOUR_CATALYST_DOMAIN/server/createTask"
+		url :"https://YOUR CATALYST DOMAIN/server/createTask"
 		type :POST
 		parameter:taskData
 		content-type:"application/json"
@@ -89,19 +89,19 @@ card.put("theme", "modern");
 if(success)
 {
 	card.put("title", "📝 Task Created!");
-	card.put("sub_title", taskTitle);
+	card.put("sub title", taskTitle);
 }
 else
 {
 	card.put("title", "⚠ Task Saved Locally");
-	card.put("sub_title", "Backend unreachable");
+	card.put("sub title", "Backend unreachable");
 }
 
 // Buttons
 buttonList = List();
-buttonList.add({"label":"✔ Mark Done", "action":"mark_done", "task_title":taskTitle});
-buttonList.add({"label":"✏ Edit", "action":"update_task", "task_title":taskTitle});
-buttonList.add({"label":"🗑 Delete", "action":"delete_task", "task_title":taskTitle});
+buttonList.add({"label":"✔ Mark Done", "action":"mark done", "task title":taskTitle});
+buttonList.add({"label":"✏ Edit", "action":"update task", "task title":taskTitle});
+buttonList.add({"label":"🗑 Delete", "action":"delete task", "task title":taskTitle});
 
 card.put("buttons", buttonList);
 
