@@ -1,1 +1,9 @@
-
+{
+  "name": "getTask",
+  "version": "1.0.0",
+  "description": "Fetch a single task by title for CliqZen Bot (Catalyst ZCF)",
+  "main": "index.js",
+  "dependencies": {
+    "zcatalyst-sdk-node": "^1.0.0"
+  }
+}
