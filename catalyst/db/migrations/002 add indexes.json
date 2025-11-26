@@ -1,1 +1,19 @@
-
+{
+  "migration_id": "002_add_indexes",
+  "changes": [
+    {
+      "action": "create_index",
+      "table_name": "Tasks",
+      "index_name": "idx_title",
+      "column": "title",
+      "type": "btree"
+    },
+    {
+      "action": "create_index",
+      "table_name": "Tasks",
+      "index_name": "idx_status",
+      "column": "status",
+      "type": "btree"
+    }
+  ]
+}
