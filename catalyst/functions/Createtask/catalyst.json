@@ -1,1 +1,7 @@
-
+{
+  "name": "createTask",
+  "type": "advancedio",
+  "platform": "node16",
+  "memory": 256,
+  "timeout": 15
+}
