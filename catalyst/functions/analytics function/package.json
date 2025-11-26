@@ -1,1 +1,9 @@
-
+{
+  "name": "analytics",
+  "version": "1.0.0",
+  "description": "Analytics computation function for CliqZen Bot (Catalyst)",
+  "main": "index.js",
+  "dependencies": {
+    "zcatalyst-sdk-node": "^1.0.0"
+  }
+}
