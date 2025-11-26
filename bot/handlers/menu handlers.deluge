@@ -3,8 +3,8 @@
 // Handles all bot menu clicks & admin tools
 // -----------------------------------------------------
 
-action = menu_action.get("name");
-user = menu_action.get("user");
+action = menu action.get("name");
+user = menu action.get("user");
 username = user.get("name");
 
 // Debug log (safe)
@@ -65,16 +65,16 @@ apiCall = function(apiURL, mode)
 // -----------------------------------------------------
 switch(action)
 {
-	case "create_new_task":
+	case "create new task":
 		return {
 			"text" : "🆕 *Create a New Task*\nType below:\n```\ncreate task Buy groceries\n```"
 		};
 
-	case "view_tasks":
-		return apiCall("https://YOUR_CATALYST_DOMAIN/server/listTasks", "GET");
+	case "view tasks":
+		return apiCall("https://YOUR CATALYST DOMAIN/server/listTasks", "GET");
 
 	case "my_tasks":
-		return apiCall("https://YOUR_CATALYST_DOMAIN/server/listTasks?user=" + username, "GET");
+		return apiCall("https://YOUR CATALYST DOMAIN/server/listTasks?user=" + username, "GET");
 
 	case "search_task":
 		return {
@@ -92,17 +92,17 @@ switch(action)
 // -----------------------------------------------------
 // ADMIN MENU HANDLERS
 // -----------------------------------------------------
-if(action == "admin_analytics")
+if(action == "admin analytics")
 {
 	if(!isAdmin)
 	{
 		return {"text":"⛔ You do not have admin permissions!"};
 	}
 
-	return apiCall("https://YOUR_CATALYST_DOMAIN/server/analytics", "GET");
+	return apiCall("https://YOUR CATALYST DOMAIN/server/analytics", "GET");
 }
 
-if(action == "admin_reset_data")
+if(action == "admin reset data")
 {
 	if(!isAdmin)
 	{
