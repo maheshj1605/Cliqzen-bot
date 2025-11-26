@@ -1,9 +1,9 @@
 // ------------------------------------------------------
-// CliqZen Bot - Install Handler (Advanced Version)
+// CliqZen Bot - Install Handler 
 // Runs when the bot is installed for the first time
 // ------------------------------------------------------
 
-user = install_action.get("user");
+user = install action.get("user");
 username = user.get("name");
 
 // Log install event
@@ -14,8 +14,8 @@ info "🚀 CliqZen Bot Installed by: " + username;
 // Default Settings Setup
 // ------------------------------------------------------
 defaultSettings = Map();
-defaultSettings.put("workspace_mode", "team");
-defaultSettings.put("default_priority", "medium");
+defaultSettings.put("workspace mode", "team");
+defaultSettings.put("default priority", "medium");
 
 
 // ------------------------------------------------------
@@ -25,11 +25,11 @@ try
 {
 	resp = invokeurl
 	[
-		url :"https://YOUR_CATALYST_DOMAIN/server/saveSettings"
+		url :"https://YOUR CATALYST DOMAIN/server/saveSettings"
 		type :POST
 		body:defaultSettings
 		content-type:"application/json"
-		connection:"cliqzen_catalyst_connection"
+		connection:"cliqzen catalyst connection"
 	];
 
 	info "✅ Default settings stored successfully.";
@@ -53,3 +53,4 @@ usageText = "Use `/create`, `/tasks`, `/search`, or open the bot menu.";
 card.put("sub_title", introText + usageText);
 
 return card;
+ 
