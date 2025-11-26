@@ -1,1 +1,12 @@
-
+{
+  "name": "createTask",
+  "version": "1.0.0",
+  "description": "CliqZen Bot - createTask ZCF Function",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "zcatalyst-sdk-node": "^2.0.0"
+  }
+}
