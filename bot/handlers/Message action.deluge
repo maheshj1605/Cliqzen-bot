@@ -3,9 +3,9 @@
 // Handles button clicks on task cards
 // -----------------------------------------------------------
 
-action = message_action.get("action");
-payload = message_action.get("data");
-user = message_action.get("user");
+action = message action.get("action");
+payload = message action.get("data");
+user = message action.get("user");
 username = user.get("name");
 
 // Debug log
@@ -26,7 +26,7 @@ callAPI = function(url, method, data)
 				url :url
 				type :GET
 				content-type:"application/json"
-				connection:"cliqzen_catalyst_connection"
+				connection:"cliqzen catalyst connection"
 			];
 		}
 		else
@@ -37,7 +37,7 @@ callAPI = function(url, method, data)
 				type :POST
 				body:data
 				content-type:"application/json"
-				connection:"cliqzen_catalyst_connection"
+				connection:"cliqzen catalyst connection"
 			];
 		}
 	}
@@ -52,16 +52,16 @@ callAPI = function(url, method, data)
 // -----------------------------------------------------------
 // MARK TASK AS DONE
 // -----------------------------------------------------------
-if(action == "mark_done")
+if(action == "mark done")
 {
-	taskTitle = payload.get("task_title");
+	taskTitle = payload.get("task title");
 
 	updateData = Map();
 	updateData.put("title", taskTitle);
 	updateData.put("status", "Completed");
 
 	resp = callAPI(
-		"https://YOUR_CATALYST_DOMAIN/server/updateTask",
+		"https://YOUR CATALYST DOMAIN/server/updateTask",
 		"POST",
 		updateData
 	);
@@ -75,15 +75,15 @@ if(action == "mark_done")
 // -----------------------------------------------------------
 // DELETE TASK
 // -----------------------------------------------------------
-if(action == "delete_task")
+if(action == "delete task")
 {
-	taskTitle = payload.get("task_title");
+	taskTitle = payload.get("task title");
 
 	deletePayload = Map();
 	deletePayload.put("title", taskTitle);
 
 	resp = callAPI(
-		"https://YOUR_CATALYST_DOMAIN/server/deleteTask",
+		"https://YOUR CATALYST DOMAIN/server/deleteTask",
 		"POST",
 		deletePayload
 	);
@@ -97,9 +97,9 @@ if(action == "delete_task")
 // -----------------------------------------------------------
 // EDIT TASK (SHOW INPUT FORM)
 // -----------------------------------------------------------
-if(action == "update_task")
+if(action == "update task")
 {
-	taskTitle = payload.get("task_title");
+	taskTitle = payload.get("task title");
 
 	return {
 		"type": "form",
@@ -108,7 +108,7 @@ if(action == "update_task")
 			{
 				"type": "text",
 				"label": "Task Title",
-				"name": "new_title",
+				"name": "new title",
 				"value": taskTitle
 			},
 			{
@@ -118,9 +118,9 @@ if(action == "update_task")
 				"options": ["Low", "Medium", "High"]
 			}
 		],
-		"submit_label": "Update Task",
-		"action": "submit_edit",
-		"task_title": taskTitle
+		"submit label": "Update Task",
+		"action": "submit edit",
+		"task title": taskTitle
 	};
 }
 
@@ -128,19 +128,19 @@ if(action == "update_task")
 // -----------------------------------------------------------
 // SUBMIT EDIT (FORM SUBMISSION)
 // -----------------------------------------------------------
-if(action == "submit_edit")
+if(action == "submit edit")
 {
-	oldTitle = payload.get("task_title");
-	newTitle = payload.get("new_title");
+	oldTitle = payload.get("task title");
+	newTitle = payload.get("new title");
 	newPriority = payload.get("priority");
 
 	updateBody = Map();
-	updateBody.put("old_title", oldTitle);
-	updateBody.put("new_title", newTitle);
+	updateBody.put("old title", oldTitle);
+	updateBody.put("new title", newTitle);
 	updateBody.put("priority", newPriority);
 
 	resp = callAPI(
-		"https://YOUR_CATALYST_DOMAIN/server/updateTask",
+		"https://YOUR CATALYST DOMAIN/server/updateTask",
 		"POST",
 		updateBody
 	);
