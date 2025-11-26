@@ -3,7 +3,7 @@
 // Provides help, command guide & feature overview
 // ------------------------------------------------------
 
-user = help_action.get("user");
+user = help action.get("user");
 username = user.get("name");
 
 // Debug Log
@@ -52,12 +52,12 @@ buttons = List();
 // Button 1 - Open bot menu
 openMenuBtn = Map();
 openMenuBtn.put("label", "Open Menu");
-openMenuBtn.put("action", "open_bot_menu");
+openMenuBtn.put("action", "open bot menu");
 
 // Button 2 - Documentation
 docsBtn = Map();
 docsBtn.put("label", "Documentation");
-docsBtn.put("url", "https://YOUR_DOCS_URL");
+docsBtn.put("url", "https://YOUR DOCS URL");
 
 buttons.add(openMenuBtn);
 buttons.add(docsBtn);
