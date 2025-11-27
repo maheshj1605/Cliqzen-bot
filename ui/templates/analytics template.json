@@ -1,1 +1,22 @@
-
+{
+  "type": "card",
+  "theme": "modern",
+  "title": "📊 Task Analytics Dashboard",
+  "sub_title": "Team Productivity Overview",
+  "sections": [
+    {
+      "title": "Summary",
+      "content": [
+        "📝 Total Tasks: ${total}",
+        "✅ Completed: ${completed}",
+        "⏳ Pending: ${pending}",
+        "⚠️ Overdue: ${overdue}"
+      ]
+    },
+    {
+      "title": "Top Performers",
+      "type": "list",
+      "items": "${top_performers}"
+    }
+  ]
+}
