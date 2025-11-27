@@ -1,1 +1,43 @@
 
+// -----------------------------------------------------------
+// Workflow: Daily Summary
+// Sends a summary of all tasks every morning
+// -----------------------------------------------------------
+
+tasks = zoho.catalyst.datastore.get("Tasks");
+
+// Counters
+total = tasks.size();
+completed = 0;
+pending = 0;
+overdue = 0;
+
+for each t in tasks
+{
+    if(t.get("status") == "Completed")
+    {
+        completed = completed + 1;
+    }
+    else if(t.get("status") == "Pending")
+    {
+        pending = pending + 1;
+    }
+
+    if(t.get("due_date") != null && t.get("status") != "Completed")
+    {
+        if(t.get("due_date").toDate() < zoho.currentdate)
+        {
+            overdue = overdue + 1;
+        }
+    }
+}
+
+// Build message
+message = "📊 *Daily Task Summary*\n";
+message = message + "📝 Total: " + total + "\n";
+message = message + "✅ Completed: " + completed + "\n";
+message = message + "⏳ Pending: " + pending + "\n";
+message = message + "⚠️ Overdue: " + overdue;
+
+// Send to channel
+zoho.cliq.postToChannel("general", message);
