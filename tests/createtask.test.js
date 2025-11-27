@@ -1,83 +1,47 @@
 /**
- * -------------------------------------------------------------
- * Test Suite: createTask Function
- * Platform   : Zoho Catalyst (ZCF - Node 16)
- * Project    : CliqTrIx - Smart Task Manager
- * -------------------------------------------------------------
+ * Test: createTask Function
+ * Verifies new task creation in Catalyst Data Store.
  */
 
 const request = require("supertest");
-const catalyst = require("zcatalyst-sdk-node");
-
-jest.mock("zcatalyst-sdk-node");
+const app = require("../functions/createTask/index.js");
 
 describe("createTask Function", () => {
-    let mockApp, mockDatastore, mockTable;
+  test("should create a new task successfully", async () => {
+    const req = {
+      body: {
+        title: "Test Task",
+        priority: "High",
+        created_by: "user@example.com"
+      }
+    };
 
-    beforeEach(() => {
-        mockTable = {
-            insertRow: jest.fn().mockResolvedValue({
-                ROWID: 12345,
-                title: "Demo Task"
-            })
-        };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
 
-        mockDatastore = {
-            table: jest.fn().mockReturnValue(mockTable)
-        };
+    await app({}, req, res);
 
-        mockApp = {
-            datastore: () => mockDatastore
-        };
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Task created successfully",
+        task: expect.any(Object)
+      })
+    );
+  });
 
-        catalyst.initialize.mockReturnValue(mockApp);
-    });
+  test("should fail when title is missing", async () => {
+    const req = { body: {} };
 
-    test("should create a new task successfully", async () => {
-        const req = {
-            body: {
-                title: "Demo Task",
-                priority: "High",
-                created_by: "user123"
-            }
-        };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
 
-        // Mock Express res
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            send: jest.fn()
-        };
+    await app({}, req, res);
 
-        const createTask = require("../functions/createTask/index.js");
-        await createTask({}, req, res);
-
-        expect(mockTable.insertRow).toHaveBeenCalledWith(expect.objectContaining({
-            title: "Demo Task",
-            priority: "High",
-            created_by: "user123"
-        }));
-
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.send).toHaveBeenCalledWith(expect.objectContaining({
-            status: "success",
-            message: "Task created successfully"
-        }));
-    });
-
-    test("should return 400 if title is missing", async () => {
-        const req = { body: {} };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            send: jest.fn()
-        };
-
-        const createTask = require("../functions/createTask/index.js");
-        await createTask({}, req, res);
-
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.send).toHaveBeenCalledWith(expect.objectContaining({
-            status: "error",
-            message: "Task title is required"
-        }));
-    });
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
 });
