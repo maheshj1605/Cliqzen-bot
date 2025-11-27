@@ -1,1 +1,24 @@
+// -----------------------------------------------------------
+// Workflow: Reminder Scheduler
+// Sends reminders for tasks due today
+// -----------------------------------------------------------
 
+tasks = zoho.catalyst.datastore.get("Tasks");
+
+today = zoho.currentdate;
+
+for each t in tasks
+{
+    if(t.get("due_date") != null)
+    {
+        if(t.get("due_date").toDate() == today && t.get("status") != "Completed")
+        {
+            msg = "⏰ *Task Reminder*\n";
+            msg = msg + "📌 Task: " + t.get("title") + "\n";
+            msg = msg + "⚡ Due Today (" + t.get("due_date") + ")\n";
+            msg = msg + "Priority: " + t.get("priority");
+
+            zoho.cliq.sendMessageToUser(t.get("created_by"), msg);
+        }
+    }
+}
