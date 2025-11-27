@@ -1,1 +1,33 @@
-
+{
+  "type": "list",
+  "theme": "modern",
+  "title": "📋 Task List",
+  "sub_title": "Here are your current tasks",
+  "items": [
+    {
+      "title": "${title}",
+      "subtitle": "Priority: ${priority} | Status: ${status}",
+      "image": "https://example.com/icons/task.png",
+      "buttons": [
+        {
+          "label": "✏️ Edit",
+          "name": "edit_task",
+          "type": "invoke.function",
+          "function_name": "updateTask",
+          "params": {
+            "title": "${title}"
+          }
+        },
+        {
+          "label": "🗑️ Delete",
+          "name": "delete_task",
+          "type": "invoke.function",
+          "function_name": "deleteTask",
+          "params": {
+            "title": "${title}"
+          }
+        }
+      ]
+    }
+  ]
+}
