@@ -1,1 +1,36 @@
-
+{
+  "type": "card",
+  "theme": "modern",
+  "title": "📝 ${title}",
+  "sub_title": "Priority: ${priority}",
+  "sections": [
+    {
+      "title": "Task Details",
+      "content": [
+        "📌 Status: ${status}",
+        "👤 Created By: ${created_by}",
+        "📅 Created At: ${created_at}"
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "label": "✏️ Edit Task",
+      "name": "edit_task",
+      "type": "invoke.function",
+      "function_name": "updateTask",
+      "params": {
+        "title": "${title}"
+      }
+    },
+    {
+      "label": "🗑️ Delete Task",
+      "name": "delete_task",
+      "type": "invoke.function",
+      "function_name": "deleteTask",
+      "params": {
+        "title": "${title}"
+      }
+    }
+  ]
+}
